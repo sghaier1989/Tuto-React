@@ -1,19 +1,27 @@
 import http from '../http-common';
 
-const baseUrl = "localhost:3000/users"
+
 
 class Userervice {
 
- findAllUsers() {
-	return http.get('/' );
+findAllUsers() {
+	return http.get('/users' );
+}
+
+creatUsers(data: any) {
+	return http.post('/users/', data );
+}
+
+updateUsers(data: any) {
+	return http.put(`/users/${data.id}`, data );
 }
 
 findUser(id: any) {
-	return http.get(`/${id}` );
+	return http.get(`/users/${id}` );
 }
 
 deleteUser(id: any) {
-	return http.delete(`/${id}` );
+	return http.delete(`/users/${id}` );
 }
   
 
