@@ -17,14 +17,23 @@ function Notification({ ...props }) {
 
   return (
     <Snackbar
+      style={{ backgroundColor: "#FFFFFF" }}
       anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       open={notify.isOpenNotify}
-      autoHideDuration={5000}
+      autoHideDuration={3000}
       onClose={handleClose}
     >
-      <Alert severity="success">
-        <AlertTitle>
-          <strong>Success</strong>
+      <Alert
+        style={{
+          backgroundColor: "#FFFFFF",
+          color: "#00008C",
+          border: "2px #00008C",
+          boxShadow: "0px 12px 24px rgba(102, 109, 146, 0.2)",
+          borderRadius: "8px",
+        }}
+      >
+        <AlertTitle style={{ color: "#00008C" }}>
+          <strong>{notify.type}</strong>
         </AlertTitle>
         {notify.message}
       </Alert>

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #F8F8FB;
 }
 
 .App-logo {
@@ -36,3 +37,26 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: montserrat;
+  src: url('../public/Montserrat-Regular.ttf');
+}
+
+.montserrat{
+  font-family: montserrat;
+}
+
+
+@font-face {
+  font-family: 'Barlow';
+  src: url('../public/Barlow-Regular.ttf');
+}
+
+.Barlow{
+  font-family: 'montserrat';
+  font-style: normal;
+
+}
+
+
