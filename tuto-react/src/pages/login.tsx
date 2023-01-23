@@ -98,7 +98,7 @@ const LoginPages = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
-                  <IconButton  onClick={() => setShowPass(!showPass)}>
+                  <IconButton onClick={() => setShowPass(!showPass)}>
                     {showPass ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
@@ -108,13 +108,13 @@ const LoginPages = () => {
         </Grid>
         <Grid container style={gridStyle}>
           <FormControlLabel
-            style={{ color: "#00008C", fontFamily:'Barlow' }}
+            style={{ color: "#00008C", fontFamily: "Barlow" }}
             labelPlacement="end"
             control={<Checkbox name="checkedB" color="primary" />}
             label="Se souvenir de moi"
           />
         </Grid>
-        <Grid >
+        <Grid>
           <Button
             color="primary"
             variant="contained"

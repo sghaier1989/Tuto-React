@@ -136,13 +136,18 @@ function home() {
   return (
     <>
       <Navbar />
-      <div>
+      <div
+        style={{
+          justifyContent: "center",
+          display: "inline-grid",
+          alignItems: "center",
+        }}
+      >
         <div
           style={{
             display: "flex",
             justifyContent: "right",
             marginTop: "60px",
-            marginRight: "60px",
           }}
         >
           <Button

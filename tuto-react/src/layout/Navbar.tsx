@@ -3,12 +3,12 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import logo from "../assets/img/Logo.png";
 import { useNavigate } from "react-router-dom";
-
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
+import { ListItem, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,10 +23,14 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: "center",
     },
     logo: {
-      maxWidth: 100,
+      maxWidth: 200,
     },
   })
 );
+
+const style = {
+  flexGrow: 2,
+};
 
 export default function Navbar() {
   const nav = useNavigate();
@@ -38,30 +42,36 @@ export default function Navbar() {
   }
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" style={{ justifyContent: "space-between" }}>
-        <Toolbar style={{ backgroundColor: "#FFFFFF" }}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            style={{ borderRadius: 0 }}
-          >
-            <img src={logo} className={classes.logo} />
-          </IconButton>
-
-          <Typography variant="h6" className={classes.logo}>
-            <Button
-              variant="contained"
+    <>
+      <div className={classes.root}>
+        <AppBar position="static" style={{ justifyContent: "space-between" }}>
+          <Toolbar style={{ backgroundColor: "#FFFFFF" }}>
+            <IconButton
+              edge="start"
               color="inherit"
-              startIcon={<ExitToAppIcon />}
-              onClick={logOut}
+              aria-label="menu"
+              style={{ borderRadius: 0 }}
             >
-              Déconnexion
-            </Button>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+              <img src={logo} className={classes.logo} />
+            </IconButton>
+            <Typography variant="h6" style={style}></Typography>
+
+            <Typography variant="h6" className={classes.logo}>
+              <MenuItem>
+                <ListItem button onClick={logOut}>
+                  <ListItemIcon>
+                    <ExitToAppIcon />
+                  </ListItemIcon>
+                  <ListItemText style={{ color: "#00008C" }}>
+                    {" "}
+                    Déconnexion
+                  </ListItemText>
+                </ListItem>
+              </MenuItem>
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
+    </>
   );
 }

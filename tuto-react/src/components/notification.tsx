@@ -24,6 +24,7 @@ function Notification({ ...props }) {
       onClose={handleClose}
     >
       <Alert
+        severity={notify.type === "success" ? "success" : "error"}
         style={{
           backgroundColor: "#FFFFFF",
           color: "#00008C",
