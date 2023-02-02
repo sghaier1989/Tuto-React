@@ -14,7 +14,13 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 import ConfirmDialog from "../components/confirmModal";
-import { IconButton, Toolbar, Tooltip } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  Toolbar,
+  Tooltip,
+} from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -52,14 +58,17 @@ function home() {
   const [formData, setFormData] = useState(initialValueData);
 
   const [deleteData, setDeleteData] = useState();
+  const [loadData, setLoadData] = useState(false);
 
   useEffect(() => {
     fetchDataUsers();
   }, []);
 
   async function fetchDataUsers() {
+    setLoadData(true);
     await userService.findAllUsers().then((response) => {
       setUsersData(response.data);
+      setLoadData(false);
     });
   }
 
@@ -136,6 +145,7 @@ function home() {
   return (
     <>
       <Navbar />
+
       <div
         style={{
           justifyContent: "center",
@@ -165,8 +175,9 @@ function home() {
             Ajouter un utilisateur
           </Button>
         </div>
-        <Paper sx={{ width: 1280, top: "60px", overflow: "hidden" }}>
+        <Paper sx={{ width: 1080, top: "60px", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 800 }}>
+            {loadData ? <CircularProgress /> : null}
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -182,6 +193,7 @@ function home() {
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {usersData &&
                   usersData

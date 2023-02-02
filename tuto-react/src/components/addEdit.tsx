@@ -4,14 +4,13 @@ import Notification from "./notification";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 
-
-
 import user from "../models/user";
 import userService from "../service/UserService";
 import * as Yup from "yup";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -27,7 +26,7 @@ import { RestoreFromTrash } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { idText } from "typescript";
 
-const styleColor = {color: '#00008'}
+const styleColor = { color: "#00008" };
 
 function AddEdit(props: any) {
   const { open, handleClose, data, onChange, handleFormSubmit } = props;
@@ -36,6 +35,8 @@ function AddEdit(props: any) {
     message: "",
     type: "",
   });
+
+  const [isloading, setIsloading] = useState(false);
 
   const defaultValues = {
     firstName: "",
@@ -61,6 +62,7 @@ function AddEdit(props: any) {
   function createUser(fields: any, formikHelpers: any) {
     let messageNotif = "",
       typeNotif = "";
+    setIsloading(true);
     if (data.id === "") {
       userService.creatUsers(fields).then((response) => {
         messageNotif = "L’utilisateur a été ajouté avec succès ";
@@ -78,6 +80,7 @@ function AddEdit(props: any) {
           message: messageNotif,
           type: typeNotif,
         });
+        setIsloading(false);
 
         return true;
       });
@@ -100,7 +103,9 @@ function AddEdit(props: any) {
           message: messageNotif,
           type: typeNotif,
         });
+        setIsloading(false);
       });
+
       return true;
     }
   }
@@ -143,7 +148,6 @@ function AddEdit(props: any) {
           setFieldValue,
           handleReset,
         }) => {
-          
           return (
             <Dialog
               open={open}
@@ -151,11 +155,18 @@ function AddEdit(props: any) {
               aria-describedby="alert-dialog-description"
             >
               <Form>
-                <DialogTitle id="alert-dialog-title"  style={{color:'#00008C'}}>
-                <IconButton style={{color:'#00008C'}}>
-                {(data.id) ? <EditIcon /> : <PersonAdd />} 
-                </IconButton>
-                  <strong>{(data.id) ? "Modifier un utilisateur" : "Ajouter un utilisateur"}</strong>
+                <DialogTitle
+                  id="alert-dialog-title"
+                  style={{ color: "#00008C" }}
+                >
+                  <IconButton style={{ color: "#00008C" }}>
+                    {data.id ? <EditIcon /> : <PersonAdd />}
+                  </IconButton>
+                  <strong>
+                    {data.id
+                      ? "Modifier un utilisateur"
+                      : "Ajouter un utilisateur"}
+                  </strong>
                 </DialogTitle>
                 <Divider light />
 
@@ -164,7 +175,10 @@ function AddEdit(props: any) {
                   <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                       <Grid item xs={6}>
-                        <InputLabel htmlFor="input-with-icon-adornment" style={{color:'#00008C'}}>
+                        <InputLabel
+                          htmlFor="input-with-icon-adornment"
+                          style={{ color: "#00008C" }}
+                        >
                           Nom
                         </InputLabel>
                         <Field
@@ -174,7 +188,6 @@ function AddEdit(props: any) {
                           placeholder=" input"
                           variant="outlined"
                           color="primary"
-
                           fullWidth
                           error={
                             Boolean(errors.firstName) &&
@@ -186,7 +199,10 @@ function AddEdit(props: any) {
                         />
                       </Grid>
                       <Grid item xs={6}>
-                        <InputLabel htmlFor="input-with-icon-adornment" style={{color:'#00008C'}}>
+                        <InputLabel
+                          htmlFor="input-with-icon-adornment"
+                          style={{ color: "#00008C" }}
+                        >
                           Prenom
                         </InputLabel>
                         <Field
@@ -207,7 +223,10 @@ function AddEdit(props: any) {
                         />
                       </Grid>
                       <Grid item xs={12}>
-                        <InputLabel htmlFor="input-with-icon-adornment" style={{color:'#00008C'}}>
+                        <InputLabel
+                          htmlFor="input-with-icon-adornment"
+                          style={{ color: "#00008C" }}
+                        >
                           Email
                         </InputLabel>
                         <Field
@@ -228,25 +247,50 @@ function AddEdit(props: any) {
                   </Box>
                 </DialogContent>
                 <DialogActions>
-                  <Button
-                    color="inherit"
-                    variant="text"
-                    style={{textTransform: 'capitalize',color:'#0000FF'}}
-                    onClick={() => handleModalClose()}
-                  >
-                    Annuler
-                  </Button>
-
-                  <Button
+                  <Grid container justifyContent="flex-end" mr={2}>
+                    <Grid item xs={2} sm={2} sx={{ mr: -2 }}>
+                      <Button
+                        disabled={isloading}
+                        color="inherit"
+                        variant="text"
+                        style={{
+                          textTransform: "capitalize",
+                          color: "#0000FF",
+                        }}
+                        onClick={() => handleModalClose()}
+                      >
+                        Annuler
+                      </Button>{" "}
+                    </Grid>
+                    {/* <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     size="large"
-                    style={{textTransform: 'capitalize',borderRadius: 50}}
+                    style={{ textTransform: "capitalize", borderRadius: 50 }}
                     disabled={!isValid || !dirty}
                   >
-                   {data.id ? "Modifier" : "Ajouter"}
-                  </Button>
+                    {data.id ? "Modifier" : "Ajouter"}
+                  </Button> */}
+                    <Grid item xs={2} sm={2}>
+                      <LoadingButton
+                        loading={isloading}
+                        variant="contained"
+                        data-testid="login-submit"
+                        id="idLoginButton"
+                        color="primary"
+                        style={{
+                          textTransform: "capitalize",
+                          borderRadius: 50,
+                        }}
+                        disabled={!isValid || !dirty}
+                        fullWidth
+                        type="submit"
+                      >
+                        {data.id ? "Modifier" : "Ajouter"}
+                      </LoadingButton>
+                    </Grid>
+                  </Grid>
                 </DialogActions>
               </Form>
             </Dialog>

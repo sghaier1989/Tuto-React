@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
 
 import Home from "./pages/home";
 import LoginPages from "./pages/login";
-import { AddEdit } from "./components/addEdit";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Routes,
-  BrowserRouter,
-} from "react-router-dom";
-import { Login } from "@mui/icons-material";
+import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "./service/privateroute";
 
 function App() {

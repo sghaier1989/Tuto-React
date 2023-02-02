@@ -41,6 +41,10 @@ export default function Navbar() {
     nav("/login");
   }
 
+  function onClickHandler() {
+    nav("/home");
+  }
+
   return (
     <>
       <div className={classes.root}>
@@ -50,6 +54,7 @@ export default function Navbar() {
               edge="start"
               color="inherit"
               aria-label="menu"
+              onClick={onClickHandler}
               style={{ borderRadius: 0 }}
             >
               <img src={logo} className={classes.logo} />
@@ -58,12 +63,11 @@ export default function Navbar() {
 
             <Typography variant="h6" className={classes.logo}>
               <MenuItem>
-                <ListItem button onClick={logOut}>
+                <ListItem>
                   <ListItemIcon>
                     <ExitToAppIcon />
                   </ListItemIcon>
-                  <ListItemText style={{ color: "#00008C" }}>
-                    {" "}
+                  <ListItemText style={{ color: "#00008C" }} onClick={logOut}>
                     Déconnexion
                   </ListItemText>
                 </ListItem>
