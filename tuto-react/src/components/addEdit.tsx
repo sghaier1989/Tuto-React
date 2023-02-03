@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 import Notification from "./notification";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 
-import user from "../models/user";
 import userService from "../service/UserService";
 import * as Yup from "yup";
 import {
   Box,
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -19,14 +17,9 @@ import {
   Grid,
   IconButton,
   InputLabel,
-  makeStyles,
   TextField,
 } from "@mui/material";
-import { RestoreFromTrash } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { idText } from "typescript";
-
-const styleColor = { color: "#00008" };
 
 function AddEdit(props: any) {
   const { open, handleClose, data, handleFormSubmit } = props;
@@ -45,7 +38,6 @@ function AddEdit(props: any) {
   };
 
   const [initalValues, setInitialValues] = useState(defaultValues);
-  const [openForm, setOpenForm] = React.useState(open);
 
   const validationSchema = Yup.object().shape({
     lastName: Yup.string()

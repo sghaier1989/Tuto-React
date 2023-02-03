@@ -119,8 +119,14 @@ function home() {
 
   const handleClose = () => {
     setOpenForm(false);
-    // setFormData(initialValueForm);
+    sleep().then(() => {
+      setFormData(initialValueForm);
+    });
   };
+
+  function sleep() {
+    return new Promise((resolve) => setTimeout(resolve, 100));
+  }
 
   const handleUpdate = (oldData: any) => {
     setFormData(oldData);
