@@ -1,7 +1,6 @@
 import {
   TextField,
   Button,
-  Box,
   Typography,
   Grid,
   Paper,
@@ -10,10 +9,10 @@ import {
   InputLabel,
   InputAdornment,
   IconButton,
+  CircularProgress,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Stack } from "@mui/system";
-import { Form } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +20,7 @@ const LoginPages = () => {
   const nav = useNavigate();
 
   const [showPass, setShowPass] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   //const [email, setEmail] = useState({email:"",password:"",isChecked:false});
 
   const paperStyle = {
@@ -39,8 +39,13 @@ const LoginPages = () => {
   };
 
   function loginSubmit() {
-    localStorage.setItem("accessToken", "token acess app");
-    nav("/home");
+    setIsLoading(true);
+    //call API
+    setTimeout(() => {
+      localStorage.setItem("accessToken", "token acess app");
+      nav("/home");
+      setIsLoading(false);
+    }, 2000);
   }
 
   return (
@@ -119,9 +124,16 @@ const LoginPages = () => {
             color="primary"
             variant="contained"
             style={btnstyle}
+            disabled={isLoading}
             fullWidth
             onClick={loginSubmit}
           >
+            {isLoading ? (
+              <CircularProgress
+                size={20}
+                style={{ color: "white", marginRight: "20px" }}
+              />
+            ) : null}
             Connexion
           </Button>
         </Grid>

@@ -14,19 +14,12 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 import ConfirmDialog from "../components/confirmModal";
-import {
-  Box,
-  CircularProgress,
-  IconButton,
-  Toolbar,
-  Tooltip,
-} from "@mui/material";
+import { CircularProgress, IconButton, Tooltip } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
 import Button from "@mui/material/Button";
-import Notification from "../components/notification";
 import { AddEdit } from "../components/addEdit";
 import Navbar from "../layout/Navbar";
 
@@ -52,7 +45,7 @@ function home() {
     subTitle:
       "Vous êtes sur le point de supprimer un utilisateur. Cette action est irrévercible. Souhaitez-vous confirmer ?",
   });
-  const initialValueData = { firstName: "", lastName: "", email: "", id: "" };
+  const initialValueData = { firstName: "", lastName: "", email: "" };
 
   const [openForm, setOpenForm] = React.useState(false);
   const [formData, setFormData] = useState(initialValueData);
@@ -83,8 +76,14 @@ function home() {
     setPage(0);
   };
 
+  const onChange = (e: { target: { value: any; name: any } }) => {
+    const { value, name } = e.target;
+
+    setFormData({ ...formData, [name]: value });
+  };
+
   function onDeleteUser() {
-    let data = userService.deleteUser(deleteData).then((response) => {
+    userService.deleteUser(deleteData).then((response) => {
       let messageNotif = "La suppression de l’utilisateur a échoué";
       let typeNotif = "error";
 
@@ -120,7 +119,7 @@ function home() {
 
   const handleClose = () => {
     setOpenForm(false);
-    setFormData(initialValueData);
+    // setFormData(initialValueForm);
   };
 
   const handleUpdate = (oldData: any) => {
@@ -132,10 +131,9 @@ function home() {
     setOpenForm(true);
   };
 
-  const onChange = (e: { target: { value: any; name: any } }) => {
-    const { value, name } = e.target;
-
-    setFormData({ ...formData, [name]: value });
+  const handleClickOpenAdd = () => {
+    setFormData(initialValueData);
+    setOpenForm(true);
   };
 
   const handleFormSubmit = () => {
@@ -163,7 +161,7 @@ function home() {
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={handleClickOpen}
+            onClick={handleClickOpenAdd}
             style={{
               borderRadius: 30,
               display: "flex",
@@ -255,8 +253,8 @@ function home() {
         <AddEdit
           open={openForm}
           handleClose={handleClose}
-          onChange={onChange}
           data={formData}
+          onChange={onChange}
           setInitialValue={setInitialValue}
           handleFormSubmit={handleFormSubmit}
         ></AddEdit>

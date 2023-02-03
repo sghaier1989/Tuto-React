@@ -29,7 +29,7 @@ import { idText } from "typescript";
 const styleColor = { color: "#00008" };
 
 function AddEdit(props: any) {
-  const { open, handleClose, data, onChange, handleFormSubmit } = props;
+  const { open, handleClose, data, handleFormSubmit } = props;
   const [notify, setNotify] = useState({
     isOpenNotify: false,
     message: "",
@@ -63,7 +63,7 @@ function AddEdit(props: any) {
     let messageNotif = "",
       typeNotif = "";
     setIsloading(true);
-    if (data.id === "") {
+    if (typeof data.id === "undefined") {
       userService.creatUsers(fields).then((response) => {
         messageNotif = "L’utilisateur a été ajouté avec succès ";
         typeNotif = "success";
@@ -72,7 +72,7 @@ function AddEdit(props: any) {
           typeNotif = "error";
         }
         handleClose();
-        formikHelpers.resetForm();
+
         handleFormSubmit();
         setInitialValues(defaultValues);
         setNotify({
@@ -81,6 +81,7 @@ function AddEdit(props: any) {
           type: typeNotif,
         });
         setIsloading(false);
+        formikHelpers.resetForm();
 
         return true;
       });
@@ -111,8 +112,8 @@ function AddEdit(props: any) {
   }
 
   function handleModalClose() {
-    setInitialValues(defaultValues);
     handleClose();
+    setInitialValues(defaultValues);
   }
 
   async function fetchUser(id: any) {
